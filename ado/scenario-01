@@ -1,0 +1,124 @@
+# Scenario 1: Create Your First CI Pipeline
+
+## 🎯 Objective
+Set up an automated CI pipeline that triggers on every push to `main`, installs dependencies, runs tests, and publishes results.
+
+## 📋 Prerequisites
+- Azure DevOps organization and project created
+- A Git repository in Azure Repos
+- Python project with `requirements.txt` and `tests/` folder
+
+## 🛠️ Step-by-Step Lab
+
+### Step 1: Create a sample Python app
+
+```python
+# app.py
+def add(a, b):
+    return a + b
+
+def subtract(a, b):
+    return a - b
+```
+
+```python
+# tests/test_app.py
+from app import add, subtract
+
+def test_add():
+    assert add(2, 3) == 5
+
+def test_subtract():
+    assert subtract(5, 3) == 2
+```
+
+```text
+# requirements.txt
+pytest
+pytest-azurepipelines
+```
+
+### Step 2: Create `azure-pipelines.yml` in repo root
+
+```yaml
+trigger:
+  branches:
+    include:
+      - main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  pythonVersion: '3.11'
+
+steps:
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: '$(pythonVersion)'
+      addToPath: true
+    displayName: '🐍 Use Python $(pythonVersion)'
+
+  - script: |
+      python -m pip install --upgrade pip
+      pip install -r requirements.txt
+    displayName: '📦 Install Dependencies'
+
+  - script: |
+      pytest tests/ --junitxml=test-results.xml --tb=short -v
+    displayName: '🧪 Run Tests'
+
+  - task: PublishTestResults@2
+    condition: always()
+    inputs:
+      testResultsFormat: 'JUnit'
+      testResultsFiles: 'test-results.xml'
+      testRunTitle: '$(Build.DefinitionName) - Test Results'
+    displayName: '📊 Publish Test Results'
+```
+
+### Step 3: Push code to Azure Repos
+
+```bash
+git init
+git add .
+git commit -m "feat: add CI pipeline"
+git remote add origin https://dev.azure.com/{org}/{project}/_git/{repo}
+git push -u origin main
+```
+
+### Step 4: Create the Pipeline in UI
+1. Go to **Pipelines → New Pipeline**
+2. Select **Azure Repos Git**
+3. Select your repository
+4. Choose **Existing Azure Pipelines YAML file**
+5. Select `/azure-pipelines.yml`
+6. Click **Run**
+
+## ✅ Expected Output / Answer
+
+```
+##[section]Starting: 🐍 Use Python 3.11
+##[section]Starting: 📦 Install Dependencies
+Successfully installed pip-23.3.1 pytest-7.4.0
+##[section]Starting: 🧪 Run Tests
+collected 2 items
+tests/test_app.py::test_add        PASSED  [50%]
+tests/test_app.py::test_subtract   PASSED  [100%]
+2 passed in 0.42s
+##[section]Starting: 📊 Publish Test Results
+Published 2 test result(s)
+```
+
+- ✅ Pipeline shows green checkmark
+- ✅ Tests tab shows 2 passed
+- ✅ Auto-triggers on next `git push`
+
+## 🖼️ Reference Screenshot
+![Azure Pipelines First Run](https://learn.microsoft.com/en-us/azure/devops/pipelines/media/get-started-yaml/new-pipeline-success.png)
+
+## 💡 Key Concepts
+- `trigger:` defines when pipeline runs automatically
+- `pool: vmImage` selects a Microsoft-hosted agent
+- `PublishTestResults@2` shows results in the Azure DevOps UI
+- `condition: always()` publishes results even on failure
