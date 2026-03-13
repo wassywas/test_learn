@@ -1,0 +1,110 @@
+# Scenario 2: Multi-Stage Pipeline (CI + CD)
+
+## 🎯 Objective
+Build a multi-stage pipeline with a **Build** stage and a **Deploy** stage that runs only after a successful build.
+
+## 📋 Prerequisites
+- Completed Scenario 1
+- Azure App Service created (for deploy stage)
+
+## 🛠️ Step-by-Step Lab
+
+### Step 1: Create multi-stage `azure-pipelines.yml`
+
+```yaml
+trigger:
+  branches:
+    include:
+      - main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+stages:
+
+  # ─── Stage 1: Build ───────────────────────────────────────────
+  - stage: Build
+    displayName: '🔨 Build Stage'
+    jobs:
+      - job: BuildJob
+        displayName: 'Build and Test'
+        steps:
+          - task: UsePythonVersion@0
+            inputs:
+              versionSpec: '3.11'
+
+          - script: |
+              pip install -r requirements.txt
+              pytest tests/ --junitxml=test-results.xml
+            displayName: 'Install and Test'
+
+          - task: PublishTestResults@2
+            condition: always()
+            inputs:
+              testResultsFiles: 'test-results.xml'
+
+          - task: ArchiveFiles@2
+            inputs:
+              rootFolderOrFile: '$(Build.SourcesDirectory)'
+              includeRootFolder: false
+              archiveType: 'zip'
+              archiveFile: '$(Build.ArtifactStagingDirectory)/app.zip'
+            displayName: '📦 Package App'
+
+          - task: PublishBuildArtifacts@1
+            inputs:
+              PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+              ArtifactName: 'drop'
+            displayName: '📤 Publish Artifact'
+
+  # ─── Stage 2: Deploy ──────────────────────────────────────────
+  - stage: Deploy
+    displayName: '🚀 Deploy Stage'
+    dependsOn: Build
+    condition: succeeded()
+    jobs:
+      - job: DeployJob
+        displayName: 'Deploy to App Service'
+        steps:
+          - task: DownloadBuildArtifacts@1
+            inputs:
+              artifactName: 'drop'
+              downloadPath: '$(System.ArtifactsDirectory)'
+            displayName: '📥 Download Artifact'
+
+          - task: AzureWebApp@1
+            inputs:
+              azureSubscription: 'MyAzureServiceConnection'
+              appType: 'webAppLinux'
+              appName: 'my-webapp-name'
+              package: '$(System.ArtifactsDirectory)/drop/app.zip'
+            displayName: '🌐 Deploy to Azure App Service'
+```
+
+### Step 2: Verify stages in the UI
+1. Go to **Pipelines → Runs**
+2. Click on the latest run
+3. You will see two stages: **Build** and **Deploy** with progress indicators
+
+## ✅ Expected Output / Answer
+
+```
+Stage: 🔨 Build Stage      ✅ Succeeded  (1m 23s)
+Stage: 🚀 Deploy Stage     ✅ Succeeded  (0m 45s)
+
+Artifacts published: drop (app.zip — 2.3 MB)
+Deployment target: https://my-webapp-name.azurewebsites.net
+```
+
+- ✅ Deploy only runs if Build succeeds
+- ✅ If Build fails → Deploy is **Skipped**
+- ✅ Artifact `drop` visible under pipeline summary
+
+## 🖼️ Reference Screenshot
+![Multi-Stage Pipeline](https://learn.microsoft.com/en-us/azure/devops/pipelines/media/get-started-designer/stages-designer.png)
+
+## 💡 Key Concepts
+- `stages:` splits pipeline into logical phases
+- `dependsOn:` enforces ordering between stages
+- `condition: succeeded()` prevents deploy on build failure
+- `ArchiveFiles@2` packages the app into a deployable zip
