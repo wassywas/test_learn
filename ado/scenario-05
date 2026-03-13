@@ -1,0 +1,186 @@
+# Scenario 5: Deploy to Azure App Service
+
+## ��� Objective
+Build and deploy a Python Flask app to Azure App Service using a CI/CD pipeline.
+
+## 📋 Prerequisites
+- Azure subscription
+- Azure App Service (Linux) created
+- Service connection configured in Azure DevOps
+
+## 🛠️ Step-by-Step Lab
+
+### Step 1: Create the Flask App
+
+```python
+# app.py
+from flask import Flask, jsonify
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return jsonify({"message": "Hello from Azure App Service!", "status": "ok"})
+
+@app.route('/health')
+def health():
+    return jsonify({"status": "healthy"}), 200
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=8000)
+```
+
+```text
+# requirements.txt
+flask==3.0.0
+gunicorn==21.2.0
+```
+
+```text
+# startup.txt  (App Service startup command)
+gunicorn --bind=0.0.0.0:8000 app:app
+```
+
+### Step 2: Create Service Connection via CLI
+
+```bash
+az devops service-endpoint azurerm create \
+  --azure-rm-service-principal-id $SP_CLIENT_ID \
+  --azure-rm-subscription-id $SUBSCRIPTION_ID \
+  --azure-rm-subscription-name "My Subscription" \
+  --azure-rm-tenant-id $TENANT_ID \
+  --name "MyAzureConnection" \
+  --project "MyProject"
+```
+
+### Step 3: Create `azure-pipelines.yml`
+
+```yaml
+trigger:
+  branches:
+    include:
+      - main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  azureServiceConnection: 'MyAzureConnection'
+  webAppName: 'my-flask-app'
+  resourceGroup: 'my-rg'
+  pythonVersion: '3.11'
+
+stages:
+
+  - stage: Build
+    displayName: '🔨 Build'
+    jobs:
+      - job: BuildJob
+        steps:
+          - task: UsePythonVersion@0
+            inputs:
+              versionSpec: '$(pythonVersion)'
+
+          - script: |
+              pip install -r requirements.txt
+              pip install pytest
+              pytest tests/ --junitxml=test-results.xml
+            displayName: '🧪 Test'
+
+          - task: PublishTestResults@2
+            condition: always()
+            inputs:
+              testResultsFiles: 'test-results.xml'
+
+          - task: ArchiveFiles@2
+            inputs:
+              rootFolderOrFile: '$(Build.SourcesDirectory)'
+              includeRootFolder: false
+              archiveFile: '$(Build.ArtifactStagingDirectory)/app.zip'
+            displayName: '📦 Zip App'
+
+          - task: PublishBuildArtifacts@1
+            inputs:
+              PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+              ArtifactName: 'drop'
+
+  - stage: Deploy
+    displayName: '🚀 Deploy'
+    dependsOn: Build
+    condition: succeeded()
+    jobs:
+      - deployment: DeployWebApp
+        environment: 'production'
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - task: AzureWebApp@1
+                  inputs:
+                    azureSubscription: '$(azureServiceConnection)'
+                    appType: 'webAppLinux'
+                    appName: '$(webAppName)'
+                    package: '$(Pipeline.Workspace)/drop/app.zip'
+                    startUpCommand: 'gunicorn --bind=0.0.0.0:8000 app:app'
+                  displayName: '🌐 Deploy to App Service'
+
+                - task: AzureCLI@2
+                  inputs:
+                    azureSubscription: '$(azureServiceConnection)'
+                    scriptType: 'bash'
+                    scriptLocation: 'inlineScript'
+                    inlineScript: |
+                      echo "🔍 Running health check..."
+                      sleep 30
+                      STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+                        https://$(webAppName).azurewebsites.net/health)
+                      if [ "$STATUS" -eq 200 ]; then
+                        echo "✅ Health check passed! (HTTP $STATUS)"
+                      else
+                        echo "❌ Health check failed! (HTTP $STATUS)"
+                        exit 1
+                      fi
+                  displayName: '❤️ Health Check'
+```
+
+### Step 4: Create Azure App Service via CLI
+
+```bash
+# Create resource group
+az group create --name my-rg --location eastus
+
+# Create App Service plan
+az appservice plan create \
+  --name my-plan \
+  --resource-group my-rg \
+  --sku B1 \
+  --is-linux
+
+# Create Web App
+az webapp create \
+  --name my-flask-app \
+  --resource-group my-rg \
+  --plan my-plan \
+  --runtime "PYTHON:3.11"
+```
+
+## ✅ Expected Output / Answer
+
+```
+Stage: 🔨 Build    ✅ Succeeded
+Stage: 🚀 Deploy   ✅ Succeeded
+
+🔍 Running health check...
+✅ Health check passed! (HTTP 200)
+
+App URL: https://my-flask-app.azurewebsites.net
+Response: {"message": "Hello from Azure App Service!", "status": "ok"}
+```
+
+## 🖼️ Reference Screenshot
+![App Service Deploy](https://learn.microsoft.com/en-us/azure/app-service/media/quickstart-python/run-app-azure.png)
+
+## 💡 Key Concepts
+- `AzureWebApp@1` deploys a zip package to App Service
+- `startUpCommand` overrides the default startup for Linux apps
+- Health check after deploy validates the deployment succeeded
+- `condition: succeeded()` prevents deploy if build failed
