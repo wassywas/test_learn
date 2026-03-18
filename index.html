@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AIKART — Virtual Mentorship 1:1</title>
+<meta name="description" content="AIKART offers pure 1:1 virtual mentorship for DevOps, SRE, Cloud and Security engineering. No batches. Just you and your mentor."/>
+<meta name="keywords" content="DevOps mentorship, Kubernetes training, SRE course, Cloud security, 1:1 mentorship India"/>
+<meta property="og:title" content="AIKART — Virtual Mentorship 1:1"/>
+<meta property="og:description" content="No batches. Just you and your mentor. Pure 1:1 engineering mentorship."/>
+<meta property="og:url" content="https://aikart.in"/>
+<link rel="canonical" href="https://aikart.in"/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{--navy:#0B1F3A;--navy-dark:#091629;--teal:#0A5C5C;--crimson:#7A1515;--gold:#C8900A;--gold-bright:#F5A800;--gold-light:#F5C842;--gold-pale:#FEF3D0;--cream:#F6F5EF;--white:#FFFFFF;--dark:#0D0D0D;--mid:#52525B;--soft:#8FA0B5;--border:#E4E7EF;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--dark);overflow-x:hidden;}
+::-webkit-scrollbar{width:6px;}::-webkit-scrollbar-track{background:var(--navy);}::-webkit-scrollbar-thumb{background:var(--gold);border-radius:3px;}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(9,22,41,0.97);backdrop-filter:blur(12px);border-bottom:2px solid var(--gold);padding:0 48px;height:66px;display:flex;align-items:center;justify-content:space-between;}
+.nav-brand{font-family:'Fraunces',serif;font-size:2rem;font-weight:900;letter-spacing:-1px;color:var(--white);text-decoration:none;}
+.nav-brand span{color:var(--gold-light);}
+.nav-links{display:flex;gap:32px;list-style:none;}
+.nav-links a{font-size:0.875rem;font-weight:500;color:var(--soft);text-decoration:none;transition:color 0.2s;border-bottom:2px solid transparent;padding-bottom:2px;}
+.nav-links a:hover{color:var(--gold-light);border-bottom-color:var(--gold);}
+.nav-right{display:flex;gap:10px;align-items:center;}
+.btn-ghost-nav{font-size:0.82rem;font-weight:600;color:var(--soft);border:1.5px solid rgba(255,255,255,0.15);padding:8px 18px;border-radius:6px;text-decoration:none;transition:all 0.2s;}
+.btn-ghost-nav:hover{color:var(--white);border-color:rgba(255,255,255,0.4);}
+.btn-cta-nav{font-size:0.82rem;font-weight:700;background:var(--gold-bright);color:var(--navy);padding:9px 20px;border-radius:6px;text-decoration:none;transition:all 0.2s;display:flex;align-items:center;gap:6px;}
+.btn-cta-nav:hover{background:var(--gold-light);transform:translateY(-1px);}
+.hero{min-height:100vh;background:var(--navy-dark);display:flex;align-items:center;padding:120px 48px 80px;position:relative;overflow:hidden;}
+.blob{position:absolute;border-radius:50%;filter:blur(90px);pointer-events:none;}
+.blob-1{width:600px;height:600px;background:radial-gradient(circle,rgba(200,144,10,0.11) 0%,transparent 70%);top:-120px;right:-80px;}
+.blob-2{width:480px;height:480px;background:radial-gradient(circle,rgba(10,92,92,0.13) 0%,transparent 70%);bottom:-80px;left:-60px;}
+.hero-grid{position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,0.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.018) 1px,transparent 1px);background-size:44px 44px;}
+.hero-inner{max-width:1160px;margin:0 auto;width:100%;position:relative;z-index:1;display:grid;grid-template-columns:1.1fr 0.9fr;gap:72px;align-items:center;}
+.tag-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(245,168,0,0.12);border:1px solid rgba(245,168,0,0.25);color:var(--gold-light);font-size:0.72rem;font-weight:700;padding:6px 14px;border-radius:30px;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:22px;}
+.pulse{width:6px;height:6px;border-radius:50%;background:var(--gold-bright);animation:pulse 1.8s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.4;transform:scale(0.6)}}
+.hero h1{font-family:'Fraunces',serif;font-size:clamp(2.8rem,4.5vw,4.4rem);font-weight:900;line-height:1.08;color:var(--white);letter-spacing:-1.5px;margin-bottom:20px;}
+.hero h1 .gold{color:var(--gold-light);}.hero h1 .it{font-style:italic;}
+.hero-desc{font-size:1.05rem;color:var(--soft);line-height:1.78;margin-bottom:36px;font-weight:300;max-width:500px;}
+.hero-desc strong{color:var(--white);font-weight:600;}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:44px;}
+.btn-primary{display:inline-flex;align-items:center;gap:8px;background:var(--gold-bright);color:var(--navy);font-weight:700;font-size:0.95rem;padding:14px 28px;border-radius:8px;text-decoration:none;border:none;cursor:pointer;transition:all 0.22s;}
+.btn-primary:hover{background:var(--gold-light);transform:translateY(-2px);box-shadow:0 8px 28px rgba(245,168,0,0.3);}
+.btn-ghost{display:inline-flex;align-items:center;gap:8px;border:1.5px solid rgba(255,255,255,0.18);color:var(--white);font-weight:500;font-size:0.95rem;padding:14px 28px;border-radius:8px;text-decoration:none;transition:all 0.22s;}
+.btn-ghost:hover{border-color:var(--gold-light);color:var(--gold-light);}
+.hero-badges{display:flex;gap:8px;flex-wrap:wrap;}
+.badge{font-size:0.74rem;font-weight:600;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:var(--soft);padding:6px 13px;border-radius:20px;}
+.hero-cards{display:flex;flex-direction:column;gap:14px;}
+.hcard{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:20px 22px;display:flex;align-items:flex-start;gap:14px;transition:all 0.2s;}
+.hcard:hover{border-color:rgba(200,144,10,0.3);background:rgba(200,144,10,0.05);}
+.hcard:first-child{background:rgba(200,144,10,0.07);border-color:rgba(200,144,10,0.2);}
+.hcard-icon{font-size:1.5rem;flex-shrink:0;margin-top:2px;}
+.hcard-title{font-weight:700;font-size:0.95rem;color:var(--white);margin-bottom:4px;}
+.hcard-desc{font-size:0.8rem;color:var(--soft);line-height:1.55;}
+.section{padding:88px 48px;}
+.section-inner{max-width:1160px;margin:0 auto;}
+.eyebrow{font-size:0.7rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+.sec-title{font-family:'Fraunces',serif;font-size:clamp(1.8rem,2.8vw,2.6rem);font-weight:900;color:var(--navy);line-height:1.15;letter-spacing:-0.5px;margin-bottom:14px;}
+.sec-title.light{color:var(--white);}
+.sec-sub{font-size:0.95rem;color:var(--mid);line-height:1.7;max-width:560px;}
+.about{background:var(--white);border-top:3px solid var(--gold);}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start;margin-top:56px;}
+.about-text p{font-size:1rem;color:var(--mid);line-height:1.85;margin-bottom:20px;font-weight:300;}
+.about-text p strong{color:var(--navy);font-weight:700;}
+.about-text p em{color:var(--gold);font-style:normal;font-weight:600;}
+.pillars{display:flex;flex-direction:column;gap:14px;}
+.pillar{display:flex;align-items:flex-start;gap:16px;padding:18px 20px;border-radius:12px;border:1.5px solid var(--border);background:var(--cream);transition:all 0.22s;}
+.pillar:hover{border-color:var(--gold);transform:translateX(5px);}
+.pillar-num{font-family:'Fraunces',serif;font-size:1.7rem;font-weight:900;color:var(--gold-light);line-height:1;flex-shrink:0;width:32px;}
+.pillar-title{font-weight:700;font-size:0.92rem;color:var(--navy);margin-bottom:4px;}
+.pillar-desc{font-size:0.8rem;color:var(--mid);line-height:1.6;}
+.courses{background:var(--cream);}
+.courses-list{display:flex;flex-direction:column;gap:20px;margin-top:48px;}
+.course-card{background:var(--white);border-radius:14px;border:1.5px solid var(--border);overflow:hidden;display:grid;grid-template-columns:7px 1fr;transition:all 0.25s;}
+.course-card:hover{transform:translateY(-3px);box-shadow:0 14px 44px rgba(11,31,58,0.1);border-color:transparent;}
+.cc-bar{width:7px;}.cc-bar.c1{background:var(--navy)}.cc-bar.c2{background:var(--teal)}.cc-bar.c3{background:var(--crimson)}
+.cc-body{padding:28px 32px;}
+.cc-top{display:flex;align-items:center;gap:12px;margin-bottom:6px;}
+.cc-num{font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--mid);}
+.cc-tag{font-size:0.68rem;font-weight:700;padding:3px 10px;border-radius:20px;background:var(--gold-pale);color:var(--gold);border:1px solid var(--gold-light);}
+.cc-title{font-family:'Fraunces',serif;font-size:1.4rem;font-weight:800;color:var(--navy);margin-bottom:4px;letter-spacing:-0.3px;}
+.cc-sub{font-size:0.83rem;color:var(--mid);margin-bottom:22px;}
+.cc-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:22px;}
+.cc-label{font-size:0.66rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--mid);margin-bottom:9px;}
+.skill-path{display:flex;flex-wrap:wrap;gap:5px;align-items:center;}
+.skill-pill{font-size:0.71rem;font-weight:600;padding:4px 9px;border-radius:4px;background:#E8EFF8;color:var(--navy);}
+.skill-sep{color:var(--gold);font-weight:700;font-size:0.8rem;}
+.role-chips{display:flex;flex-direction:column;gap:6px;}
+.role-chip{display:inline-block;width:fit-content;font-size:0.74rem;font-weight:600;padding:5px 11px;border-radius:6px;background:var(--gold-pale);color:#6B4400;border:1px solid #EAC84A;}
+.topic-list{list-style:none;display:flex;flex-direction:column;gap:5px;}
+.topic-list li{font-size:0.8rem;color:var(--dark);line-height:1.4;padding-left:13px;position:relative;}
+.topic-list li::before{content:'';position:absolute;left:0;top:7px;width:5px;height:5px;border-radius:50%;}
+.c1 .topic-list li::before{background:var(--navy)}.c2 .topic-list li::before{background:var(--teal)}.c3 .topic-list li::before{background:var(--crimson)}
+.includes{background:var(--navy);border-top:3px solid var(--gold);border-bottom:3px solid var(--gold);}
+.includes-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-top:44px;}
+.inc-card{text-align:center;padding:26px 12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:12px;transition:all 0.2s;}
+.inc-card:hover{background:rgba(200,144,10,0.09);border-color:rgba(200,144,10,0.3);transform:translateY(-4px);}
+.inc-icon{font-size:2rem;margin-bottom:10px;}
+.inc-title{font-size:0.82rem;font-weight:700;color:var(--white);margin-bottom:4px;}
+.inc-desc{font-size:0.72rem;color:var(--soft);line-height:1.5;}
+.cta-section{background:var(--white);border-top:3px solid var(--gold);padding:88px 48px;}
+.cta-inner{max-width:900px;margin:0 auto;}
+.cta-heading{font-family:'Fraunces',serif;font-size:clamp(2rem,3vw,3rem);font-weight:900;color:var(--navy);text-align:center;margin-bottom:12px;letter-spacing:-0.5px;}
+.cta-sub{text-align:center;font-size:0.95rem;color:var(--mid);line-height:1.7;max-width:520px;margin:0 auto 48px;}
+.cta-cards{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.cta-card{border-radius:14px;padding:36px 32px;text-align:center;}
+.cta-email{background:var(--white);border:2px solid var(--navy);}
+.cta-cal{background:var(--gold-bright);border:2px solid #B07800;}
+.cta-card-label{font-size:0.7rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:14px;}
+.cta-email .cta-card-label{color:var(--mid);}.cta-cal .cta-card-label{color:var(--navy);}
+.cta-link{display:block;font-family:'Fraunces',serif;font-size:1.25rem;font-weight:800;text-decoration:none;margin-bottom:10px;transition:opacity 0.2s;}
+.cta-link:hover{opacity:0.75;}
+.cta-email .cta-link{color:var(--navy);text-decoration:underline;text-decoration-color:var(--gold-bright);text-underline-offset:4px;}
+.cta-cal .cta-link{color:var(--navy-dark);}
+.cta-hint{font-size:0.78rem;}
+.cta-email .cta-hint{color:var(--soft);}.cta-cal .cta-hint{color:var(--navy);opacity:0.7;}
+footer{background:var(--navy-dark);border-top:2px solid var(--gold);padding:36px 48px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;}
+.footer-brand{font-family:'Fraunces',serif;font-size:1.3rem;font-weight:900;color:var(--white);}
+.footer-brand span{color:var(--gold-light);}
+.footer-tagline{font-size:0.82rem;font-style:italic;color:var(--soft);text-align:center;}
+.footer-links{display:flex;gap:20px;}
+.footer-links a{font-size:0.8rem;color:var(--soft);text-decoration:none;transition:color 0.2s;}
+.footer-links a:hover{color:var(--gold-light);}
+.fade-in{opacity:0;transform:translateY(22px);transition:opacity 0.6s ease,transform 0.6s ease;}
+.fade-in.visible{opacity:1;transform:translateY(0);}
+@media(max-width:960px){nav{padding:0 20px;}.nav-links{display:none;}.hero{padding:100px 24px 60px;}.hero-inner{grid-template-columns:1fr;gap:40px;}.section{padding:60px 24px;}.about-grid{grid-template-columns:1fr;gap:40px;}.cc-grid{grid-template-columns:1fr;}.includes-grid{grid-template-columns:repeat(3,1fr);}.cta-cards{grid-template-columns:1fr;}footer{flex-direction:column;text-align:center;}.footer-links{justify-content:center;}}
+@media(max-width:480px){.includes-grid{grid-template-columns:repeat(2,1fr);}.hero-btns{flex-direction:column;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-brand">AIK<span>ART</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#courses">Courses</a></li>
+    <li><a href="#includes">What's Included</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="https://calendar.app.google/TRBRfTfPRgeNDbxi7" target="_blank" class="btn-cta-nav">📅 Book Demo</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="blob blob-1"></div><div class="blob blob-2"></div><div class="hero-grid"></div>
+  <div class="hero-inner">
+    <div>
+      <div class="tag-pill"><span class="pulse"></span>1:1 Virtual Mentorship</div>
+      <h1>Not a batch.<br/><span class="gold it">A mentor.</span></h1>
+      <p class="hero-desc">The industry is moving fast. <strong>AI is reshaping every engineering role.</strong> AIKART exists to make sure you don't just keep up — you lead. One mentor. One learner. Zero crowd. <strong>Pure skill building.</strong></p>
+      <div class="hero-btns">
+        <a href="https://calendar.app.google/TRBRfTfPRgeNDbxi7" target="_blank" class="btn-primary">📅 Book a FREE Demo Call</a>
+        <a href="mailto:aikarted@gmail.com" class="btn-ghost">📧 Send an Enquiry</a>
+      </div>
+      <div class="hero-badges">
+        <span class="badge">🔬 Hands-On Labs</span>
+        <span class="badge">📝 Mock Questions</span>
+        <span class="badge">🏆 Global Cert Assist</span>
+        <span class="badge">💼 Job Support</span>
+        <span class="badge">🛝 Playgrounds</span>
+      </div>
+    </div>
+    <div class="hero-cards">
+      <div class="hcard"><div class="hcard-icon">🎯</div><div><div class="hcard-title">Purely 1:1 — always</div><div class="hcard-desc">Every session is between you and your mentor. No recordings, no group calls. Focused, personal guidance built around your goals.</div></div></div>
+      <div class="hcard"><div class="hcard-icon">🤖</div><div><div class="hcard-title">AI is here — learn with it</div><div class="hcard-desc">We teach you how to work alongside AI, use it in your toolchain and stay ahead in an AI-first engineering world.</div></div></div>
+      <div class="hcard"><div class="hcard-icon">📊</div><div><div class="hcard-title">Accountable for every learner</div><div class="hcard-desc">We don't finish courses and move on. Every learner is tracked, supported and personally guided until they reach their goal.</div></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="about section" id="about">
+  <div class="section-inner">
+    <div class="eyebrow">Why we exist</div>
+    <h2 class="sec-title">Built for the AI era.<br/>Built around you.</h2>
+    <div class="about-grid">
+      <div class="about-text fade-in">
+        <p>The engineering industry is going through its biggest shift in a generation. <strong>AI is not coming — it's already here.</strong> Tools are changing, job descriptions are changing and the skills that matter most are changing too.</p>
+        <p>Most learning platforms respond by throwing more courses at more people. <em>We chose the opposite.</em> AIKART was built to go deep, not wide. To mentor individuals, not manage batches.</p>
+        <p>We believe that <strong>every engineer who invests in their skills deserves a mentor who is personally invested in their growth</strong> — not just someone who hit record on a video.</p>
+        <p>We are countable. Every learner who joins AIKART is known by name, tracked by progress and supported by someone who genuinely cares about where they end up.</p>
+      </div>
+      <div class="pillars fade-in">
+        <div class="pillar"><div class="pillar-num">01</div><div><div class="pillar-title">You are countable</div><div class="pillar-desc">We are personally accountable for every learner. Your milestones are our milestones. Your career move is our win.</div></div></div>
+        <div class="pillar"><div class="pillar-num">02</div><div><div class="pillar-title">Connect & understand deeply</div><div class="pillar-desc">1:1 mentorship lets us understand how you think, where you get stuck and what helps you click.</div></div></div>
+        <div class="pillar"><div class="pillar-num">03</div><div><div class="pillar-title">Upgrade with AI, not against it</div><div class="pillar-desc">We integrate AI tools into every learning path so you lead in an AI-first engineering world.</div></div></div>
+        <div class="pillar"><div class="pillar-num">04</div><div><div class="pillar-title">Your pace, your path</div><div class="pillar-desc">No rigid schedules built for a batch. Every session is shaped around your skills, your goals and your time.</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="courses section" id="courses">
+  <div class="section-inner">
+    <div class="eyebrow">Learning Paths</div>
+    <h2 class="sec-title">Three courses.<br/>Three career destinations.</h2>
+    <p class="sec-sub">Each course is a deeply practical, mentor-led path built around where you want to go and who you want to become.</p>
+    <div class="courses-list fade-in">
+      <div class="course-card"><div class="cc-bar c1"></div><div class="cc-body"><div class="cc-top"><span class="cc-num">Course 01</span><span class="cc-tag">DevOps · Cloud · K8s</span></div><div class="cc-title">Cloud Native Engineering</div><div class="cc-sub">Master the full DevOps & Kubernetes engineering stack from the ground up</div><div class="cc-grid"><div><div class="cc-label">Skill Path</div><div class="skill-path"><span class="skill-pill">Linux & Git</span><span class="skill-sep">›</span><span class="skill-pill">CI/CD</span><span class="skill-sep">›</span><span class="skill-pill">Docker</span><span class="skill-sep">›</span><span class="skill-pill">Kubernetes</span><span class="skill-sep">›</span><span class="skill-pill">Cloud & IaC</span></div></div><div><div class="cc-label">If you learn this → You become</div><div class="role-chips"><span class="role-chip">DevOps Engineer</span><span class="role-chip">Kubernetes Engineer</span><span class="role-chip">Platform Engineer</span></div></div><div><div class="cc-label">What you'll learn</div><ul class="topic-list c1"><li>Linux, Shell Scripting & Git</li><li>Jenkins, GitHub Actions, ArgoCD</li><li>Docker & container security</li><li>Kubernetes — CKA / CKAD prep</li><li>Terraform, Ansible & IaC</li><li>AWS / GCP / Azure fundamentals</li><li>Prometheus & Grafana</li><li>Real-time projects & playgrounds</li></ul></div></div></div></div>
+      <div class="course-card"><div class="cc-bar c2"></div><div class="cc-body"><div class="cc-top"><span class="cc-num">Course 02</span><span class="cc-tag">SRE · Observability</span></div><div class="cc-title">Reliability Engineering Mastery</div><div class="cc-sub">Build, operate and scale production systems with SRE principles and observability</div><div class="cc-grid"><div><div class="cc-label">Skill Path</div><div class="skill-path"><span class="skill-pill">Reliability</span><span class="skill-sep">›</span><span class="skill-pill">Observability</span><span class="skill-sep">›</span><span class="skill-pill">Incident Mgmt</span><span class="skill-sep">›</span><span class="skill-pill">Chaos Eng.</span><span class="skill-sep">›</span><span class="skill-pill">Platform SRE</span></div></div><div><div class="cc-label">If you learn this → You become</div><div class="role-chips"><span class="role-chip">SRE Engineer</span><span class="role-chip">Observability Engineer</span><span class="role-chip">Platform Engineer</span></div></div><div><div class="cc-label">What you'll learn</div><ul class="topic-list c2"><li>SLO, SLI, SLA & Error Budgets</li><li>Prometheus, Grafana & PromQL</li><li>ELK Stack — logs & alerting</li><li>Incident response & postmortems</li><li>Chaos engineering & resilience</li><li>Capacity planning & load testing</li><li>Toil reduction & automation</li><li>Real-time projects & playgrounds</li></ul></div></div></div></div>
+      <div class="course-card"><div class="cc-bar c3"></div><div class="cc-body"><div class="cc-top"><span class="cc-num">Course 03</span><span class="cc-tag">DevSecOps · CISSP</span></div><div class="cc-title">Secure Cloud Engineering</div><div class="cc-sub">Become a security-first engineer — from DevSecOps pipelines to CISSP certification path</div><div class="cc-grid"><div><div class="cc-label">Skill Path</div><div class="skill-path"><span class="skill-pill">Security Basics</span><span class="skill-sep">›</span><span class="skill-pill">DevSecOps</span><span class="skill-sep">›</span><span class="skill-pill">Cloud Hardening</span><span class="skill-sep">›</span><span class="skill-pill">Compliance</span><span class="skill-sep">›</span><span class="skill-pill">CISSP Prep</span></div></div><div><div class="cc-label">If you learn this → You become</div><div class="role-chips"><span class="role-chip">DevSecOps Engineer</span><span class="role-chip">Cloud Security Engineer</span><span class="role-chip">Security Architect</span></div></div><div><div class="cc-label">What you'll learn</div><ul class="topic-list c3"><li>IAM, Zero Trust & least-privilege</li><li>DevSecOps in CI/CD pipelines</li><li>Container & Kubernetes hardening</li><li>Threat modelling & vuln. management</li><li>SIEM, SOAR & incident response</li><li>SOC 2, ISO 27001, CIS, NIST</li><li>CISSP domains & exam strategy</li><li>Global cert mock questions & prep</li></ul></div></div></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="includes section" id="includes">
+  <div class="section-inner">
+    <div class="eyebrow" style="color:var(--gold-light)">Every Course Includes</div>
+    <h2 class="sec-title light">What you get with AIKART</h2>
+    <div class="includes-grid">
+      <div class="inc-card"><div class="inc-icon">🔬</div><div class="inc-title">Hands-On Labs</div><div class="inc-desc">Real cloud environments every session</div></div>
+      <div class="inc-card"><div class="inc-icon">📝</div><div class="inc-title">Mock Questions</div><div class="inc-desc">Global cert-level practice questions</div></div>
+      <div class="inc-card"><div class="inc-icon">🏆</div><div class="inc-title">Cert Guidance</div><div class="inc-desc">Exam strategy & certification planning</div></div>
+      <div class="inc-card"><div class="inc-icon">🚀</div><div class="inc-title">Real Projects</div><div class="inc-desc">Portfolio-ready capstone projects</div></div>
+      <div class="inc-card"><div class="inc-icon">🛝</div><div class="inc-title">Playgrounds</div><div class="inc-desc">Safe environments to experiment freely</div></div>
+      <div class="inc-card"><div class="inc-icon">💼</div><div class="inc-title">Job Support</div><div class="inc-desc">Career guidance & job enquiry support</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section" id="contact">
+  <div class="cta-inner">
+    <h2 class="cta-heading">Ready to find your mentor?</h2>
+    <p class="cta-sub">Book a free demo call or drop us an email. No pressure — just a conversation about where you are and where you want to go.</p>
+    <div class="cta-cards">
+      <div class="cta-card cta-email"><div class="cta-card-label">Any enquiries</div><a href="mailto:aikarted@gmail.com" class="cta-link">aikarted@gmail.com</a><p class="cta-hint">Tap to email us — we reply within 24 hours</p></div>
+      <div class="cta-card cta-cal"><div class="cta-card-label">Book a free demo call</div><a href="https://calendar.app.google/TRBRfTfPRgeNDbxi7" target="_blank" class="cta-link">📅 Schedule on Google Calendar</a><p class="cta-hint">Pick a slot that works — 30 min, no obligation</p></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-brand">AIK<span>ART</span></div>
+  <div class="footer-tagline">Every learner matters. Every session counts. Your progress is our purpose.</div>
+  <div class="footer-links">
+    <a href="#about">About</a><a href="#courses">Courses</a>
+    <a href="mailto:aikarted@gmail.com">Contact</a>
+    <a href="https://calendar.app.google/TRBRfTfPRgeNDbxi7" target="_blank">Book Demo</a>
+  </div>
+</footer>
+
+<script>
+const obs=new IntersectionObserver((e)=>{e.forEach(el=>{if(el.isIntersecting)el.target.classList.add('visible');});},{threshold:0.1});
+document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
+</script>
+
+</body>
+</html>
